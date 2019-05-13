@@ -1,6 +1,5 @@
 # SimpleServer
-A simple file server that transfer a file from one machine to another on the same network. Most Linux machines have nc allready
-installed. I use this for CTF and hope to create more tools for CTF.
+A simple file server that transfer a file from one machine to another on the same network. I wrote this because you don't really need a whole http server to transfer one file. Most Linux have nc installed already and all you really need to is make it listen to the server to recieve your file.
 
 Works on Linux and OSX.
 
