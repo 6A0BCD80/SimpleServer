@@ -1,11 +1,13 @@
 #ifndef NIX_SOCKET_H
 #define NIX_SOCKET_H
 #include <sys/mman.h>
+#include <sys/types.h>
 #include <sys/socket.h>
 #include <resolv.h>
 #include <netdb.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <unistd.h>
 
 #define ON_ACCEPT_USERS(name) void name(i32 newSocket)
 typedef ON_ACCEPT_USERS(on_accept_users);
@@ -86,10 +88,25 @@ i32 ListenSocket(i32 port, i32 maxClients,on_accept_users *accept_user_function)
 		{
 			printf("An error has occured!\n");
 		} else {
+			/*
+			int pid ;
+			pid = fork();
+
+			if (pid < 0)
+			{
+				printf("pid error\n");
+			} else 
+			if (pid == 0)
+			{
+			}
+			*/
+			
 			if (accept_user_function)
 			{
 				accept_user_function(newsockfd);
 			}
+			
+			
 		}
 	}
 

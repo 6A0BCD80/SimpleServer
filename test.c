@@ -43,14 +43,15 @@ ON_ACCEPT_USERS(acceptUsers)
 
 		if (http)
 		{
-
+		
 			//NOTES(): Wait for a responds
-
+		
 			char buffer[256] = {};
 			int readCount = 0;
 
 			do
 			{
+
 				readCount =	recv(newSocket,buffer,255,0);
 
 				if (readCount >  0)
@@ -90,11 +91,6 @@ ON_ACCEPT_USERS(acceptUsers)
 					send(newSocket,packet,headerLength+fileSize,0);
 
 
-					if (httpHeader)
-					{
-						Free(httpHeader);
-						httpHeader=NULL;
-					}
 					if (packet)
 					{
 						Free(packet);
@@ -117,7 +113,8 @@ ON_ACCEPT_USERS(acceptUsers)
 
 		fclose(file);
 	}
-}
+
+ }
 
 bool CheckData()
 {
