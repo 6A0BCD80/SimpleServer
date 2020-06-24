@@ -10,6 +10,8 @@
 #include "string.h"
 #include "bucket.h"
 #include "nix_socket.h"
+#include <ifaddrs.h>
+#include <linux/if_link.h>
 
 s32 *filename = NULL;
 b32 http=false;
@@ -146,6 +148,9 @@ bool CheckData()
 int main(int argc, char *argv[])
 {
 	i32 port = 8080;
+	struct ifaddrs *ifAddr = NULL, *ifa = NULL;
+	int family = 0,s = 0;
+	char host[NI_MAXHOST] = {};
 
 	for (i32 argIndex=1; argIndex < argc;argIndex+=2)
 	{
@@ -176,6 +181,29 @@ int main(int argc, char *argv[])
 
 	if (CheckData()) 
 	{
+		if (getifaddrs(&ifAddr) == -1)
+		{
+			printf("Unable to get ip Address\n");
+		} else {
+			for (ifa  = ifAddr;ifa != NULL;ifa = ifa->ifa_next)
+			{
+				family = ifa->ifa_addr->sa_family;
+
+				if (ifa->ifa_addr)
+				{
+					s = getnameinfo(ifa->ifa_addr,
+							(family == AF_INET) ? sizeof(struct sockaddr_in) :
+							sizeof(struct sockaddr_in6),
+							host, NI_MAXHOST,
+							NULL, 0, NI_NUMERICHOST);
+
+					printf("%-8s : %s\n",ifa->ifa_name, host);
+
+				}
+			}
+		}
+
+
 		printf("Listing on port: %i\n", port);
 		printf("File: %s\n", filename);
 
