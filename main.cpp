@@ -187,10 +187,10 @@ int main(int argc, char *argv[])
 		} else {
 			for (ifa  = ifAddr;ifa != NULL;ifa = ifa->ifa_next)
 			{
-				family = ifa->ifa_addr->sa_family;
 
 				if (ifa->ifa_addr)
 				{
+					family = ifa->ifa_addr->sa_family;
 					s = getnameinfo(ifa->ifa_addr,
 							(family == AF_INET) ? sizeof(struct sockaddr_in) :
 							sizeof(struct sockaddr_in6),
